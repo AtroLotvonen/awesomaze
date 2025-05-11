@@ -1,0 +1,14 @@
+[package]
+name = "awesomaze"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+awesomlearn = { path = "../awesomlearn" }
+crossterm = "0.27.0"
+ratatui = {version = "0.26.1", features = ["unstable-widget-ref"]}
+rand = "0.8.5"
+clap = { version = "4.5.20", features = ["derive", "cargo"] }
+burn = { version = "0.15.0" , features = ["wgpu", "train"]}

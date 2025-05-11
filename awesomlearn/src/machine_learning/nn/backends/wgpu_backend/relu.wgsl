@@ -1,0 +1,30 @@
+const WORKGROUP_SIZE_X = 16u;
+const WORKGROUP_SIZE_Y = 16u;
+const P = 32u;
+const Q = 32u;
+const N = 32u;
+const LENGTH = 100u;
+
+
+@group(0) @binding(0) var<storage, read> input: array<f32>;
+@group(0) @binding(1) var<storage, read_write> output: array<f32>;
+
+@compute @workgroup_size(WORKGROUP_SIZE_X, WORKGROUP_SIZE_Y, 1)
+fn main(
+    @builtin(global_invocation_id) global_id: vec3<u32>,
+    @builtin(local_invocation_id) local_id: vec3<u32>,
+    @builtin(workgroup_id) workgroup_id: vec3<u32>
+) {
+    // let tx = workgroup_id.x * WORKGROUP_SIZE_X + local_id.x;
+    // let ty = workgroup_id.y * WORKGROUP_SIZE_Y + local_id.y;
+    // let tz = workgroup_id.z * 1u + local_id.z;
+    // let global_index = tz * P * Q + ty * Q + tx; 
+    // Only need the linear id
+    //
+    let global_index = global_id.z * P * Q + global_id.y * Q + global_id.x; 
+
+    if global_index < LENGTH {
+
+        output[global_index] = max(input[global_index], 0.0f);
+    }
+}
